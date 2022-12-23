@@ -1,2 +1,3 @@
 target/*
 speedtest.csv
+.envrc

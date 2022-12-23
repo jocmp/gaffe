@@ -1,7 +1,6 @@
-package main
+package gaffe
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/gocarina/gocsv"
@@ -19,28 +18,22 @@ type Benchmark struct {
 	IPAddress  string  `csv:"IP Address"`
 }
 
-func main() {
-	file, err := os.OpenFile("speedtest.csv", os.O_RDWR, os.ModePerm)
+func FetchBenchmarks(path string) ([]Benchmark, error) {
+	file, err := os.OpenFile(path, os.O_RDWR, os.ModePerm)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 	defer file.Close()
 
-	benchmarks := []*Benchmark{}
+	benchmarks := []Benchmark{}
 
 	if err := gocsv.UnmarshalFile(file, &benchmarks); err != nil {
 		panic(err)
 	}
 
-	if _, err := file.Seek(0, 0); err != nil { // Go to the start of the file
+	if _, err := file.Seek(0, 0); err != nil {
 		panic(err)
 	}
 
-	content, err := gocsv.MarshalString(&benchmarks)
-
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Println(content) // Display all clients as CSV string
+	return benchmarks, nil
 }

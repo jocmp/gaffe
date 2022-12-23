@@ -12,4 +12,4 @@ build: clean
 	@env GOOS=darwin go build $(GOFLAGS) -o target/$(BINARY_NAME).darwin
 
 run:
-	go run cmd/main.go
+	go run cmd/server/main.go
