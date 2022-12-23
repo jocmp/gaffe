@@ -5,6 +5,8 @@ Gaffe presents an HTML list for the CSV output of [sivel/speedtest-cli](https://
 I run this little web server on my NAS to keep track of a cron job that logs new speed test results over time using speedtest-cli.
 The goal is to have a simple view that doesn't require manually copying a CSV and pasting it into Google Sheets.
 
+![Index Example](./screenshots/index-example.md)
+
 ## Getting Started
 
 To try it out locally, clone this repository
@@ -27,9 +29,6 @@ export CSV_PATH=speedtest.csv
 make run
 ```
 
-You should now see the webpage on <localhost:8700>.
-
-![Index Example](./screenshots/index-example.md)
-
+You should now see the webpage on <http://localhost:8700>.
 
 
