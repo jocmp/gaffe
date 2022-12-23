@@ -23,8 +23,8 @@ func PresentBenchmarks(benchmarks []Benchmark) BenchmarksPresenter {
 	for _, benchmark := range sorted {
 		presentedBenchmark = BenchmarkPresenter{
 			Timestamp: benchmark.ChicagoTime().Format("2006-01-02 03:04:05 PM MST"),
-			Download:  fmt.Sprintf("%f", bitsToMegabits(benchmark.Download)),
-			Upload:    fmt.Sprintf("%f", bitsToMegabits(benchmark.Upload)),
+			Download:  formatAsMegabits(benchmark.Download),
+			Upload:    formatAsMegabits(benchmark.Upload),
 		}
 		presentedBenchmarks = append(presentedBenchmarks, presentedBenchmark)
 	}
@@ -47,7 +47,7 @@ func sortTimeDescending(benchmarks []Benchmark) []Benchmark {
 	return destination
 }
 
-func bitsToMegabits(value float64) float64 {
+func formatAsMegabits(value float64) string {
 	megabits := value / (1000.0 * 1000.0)
-	return megabits
+	return fmt.Sprintf("%.2f Mb/s", megabits)
 }
