@@ -7,6 +7,8 @@ The goal is to have a simple view that doesn't require manually copying a CSV an
 
 ![Index Example](./screenshots/index-example.md)
 
+For a much more sophisticated service using speedtest-cli, check out [Speedtest Tracker](https://docs.speedtest-tracker.dev/)
+
 ## Getting Started
 
 To try it out locally, clone this repository
