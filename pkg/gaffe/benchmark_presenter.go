@@ -1,9 +1,7 @@
-package cmd
+package gaffe
 
 import (
 	"fmt"
-
-	"github.com/jocmp/gaffe"
 )
 
 type BenchmarkPresenter struct {
@@ -16,7 +14,7 @@ type BenchmarksPresenter struct {
 	Benchmarks []BenchmarkPresenter
 }
 
-func PresentBenchmarks(benchmarks []gaffe.Benchmark) BenchmarksPresenter {
+func PresentBenchmarks(benchmarks []Benchmark) BenchmarksPresenter {
 	presentedBenchmarks := []BenchmarkPresenter{}
 	var presentedBenchmark BenchmarkPresenter
 

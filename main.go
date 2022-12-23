@@ -1,14 +1,14 @@
 package main
 
 import (
+	"embed"
 	"fmt"
+	"html/template"
 	"net/http"
 	"os"
 
 	"github.com/gin-gonic/gin"
-
-	"github.com/jocmp/gaffe"
-	"github.com/jocmp/gaffe/cmd"
+	"github.com/jocmp/gaffe/pkg/gaffe"
 )
 
 type Config struct {
@@ -16,12 +16,17 @@ type Config struct {
 	WebPort string
 }
 
+//go:embed templates/*
+var f embed.FS
+
 func main() {
 	config := fetchConfig()
 	indexHandler := buildIndexHandler(config)
 
 	router := gin.Default()
-	router.LoadHTMLGlob("templates/*")
+	t := template.Must(template.New("").ParseFS(f, "templates/*.html"))
+	router.SetHTMLTemplate(t)
+
 	router.GET("/", indexHandler)
 
 	router.Run(fmt.Sprintf(":%s", config.WebPort))
@@ -30,7 +35,7 @@ func main() {
 func buildIndexHandler(config Config) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		benchmarks, err := gaffe.FetchBenchmarks(config.CSVPath)
-		view := cmd.PresentBenchmarks(benchmarks)
+		view := gaffe.PresentBenchmarks(benchmarks)
 
 		if err != nil {
 			c.String(http.StatusInternalServerError, fmt.Sprintf("error: %s", err))
