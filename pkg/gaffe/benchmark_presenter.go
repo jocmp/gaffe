@@ -2,6 +2,7 @@ package gaffe
 
 import (
 	"fmt"
+	"sort"
 )
 
 type BenchmarkPresenter struct {
@@ -17,10 +18,11 @@ type BenchmarksPresenter struct {
 func PresentBenchmarks(benchmarks []Benchmark) BenchmarksPresenter {
 	presentedBenchmarks := []BenchmarkPresenter{}
 	var presentedBenchmark BenchmarkPresenter
+	sorted := sortTimeDescending(benchmarks)
 
-	for _, benchmark := range benchmarks {
+	for _, benchmark := range sorted {
 		presentedBenchmark = BenchmarkPresenter{
-			Timestamp: benchmark.Timestamp,
+			Timestamp: benchmark.ChicagoTime().Format("2006-01-02 03:04:05 PM MST"),
 			Download:  fmt.Sprintf("%f", bitsToMegabits(benchmark.Download)),
 			Upload:    fmt.Sprintf("%f", bitsToMegabits(benchmark.Upload)),
 		}
@@ -32,6 +34,17 @@ func PresentBenchmarks(benchmarks []Benchmark) BenchmarksPresenter {
 	}
 
 	return presented
+}
+
+func sortTimeDescending(benchmarks []Benchmark) []Benchmark {
+	destination := make([]Benchmark, len(benchmarks))
+	copy(destination, benchmarks)
+
+	sort.Slice(destination, func(i, j int) bool {
+		return destination[i].Timestamp > destination[j].Timestamp
+	})
+
+	return destination
 }
 
 func bitsToMegabits(value float64) float64 {
