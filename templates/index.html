@@ -8,14 +8,31 @@
 </head>
 
 <body>
+  <header class="sticky top-0 bg-white border-b-2 border-gray">
+    <div class="p-4">
+      <div class="italic font-bold font-serif">
+        Gaffe
+      </div>
+    </div>
+  </header>
   <main class="container mx-auto mt-4 px-5 flex">
-    <ul>
+    <ul class="flex-grow flex-col">
       {{range .view.Benchmarks}}
-      <li>
+      <li class="flex-grow border-solid border-2 rounded border-emerald-800 mb-1 font-mono">
         <div>
-          Timestamp {{.Timestamp}}
-          Download {{.Download}}
-          Upload {{.Upload}}
+          <div class="border-solid border-b-2 border-emerald-800 font-serif">
+            <div class="p-2 bg-emerald-200">
+              {{.Timestamp}}
+            </div>
+          </div>
+          <div class="p-2">
+            <div>
+              Download {{.Download}}
+            </div>
+            <div>
+              Upload {{.Upload}}
+            </div>
+          </div>
         </div>
       </li>
       {{end}}
