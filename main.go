@@ -24,12 +24,20 @@ func main() {
 	indexHandler := buildIndexHandler(config)
 
 	router := gin.Default()
-	t := template.Must(template.New("").ParseFS(f, "templates/*.html"))
-	router.SetHTMLTemplate(t)
+	initTemplates(router)
 
 	router.GET("/", indexHandler)
 
 	router.Run(fmt.Sprintf(":%s", config.WebPort))
+}
+
+func initTemplates(router *gin.Engine) {
+	if gin.Mode() == gin.ReleaseMode {
+		t := template.Must(template.New("").ParseFS(f, "templates/*.html"))
+		router.SetHTMLTemplate(t)
+	} else {
+		router.LoadHTMLGlob("templates/*")
+	}
 }
 
 func buildIndexHandler(config Config) func(c *gin.Context) {

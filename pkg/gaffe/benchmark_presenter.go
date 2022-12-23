@@ -49,5 +49,5 @@ func sortTimeDescending(benchmarks []Benchmark) []Benchmark {
 
 func formatAsMegabits(value float64) string {
 	megabits := value / (1000.0 * 1000.0)
-	return fmt.Sprintf("%.2f Mb/s", megabits)
+	return fmt.Sprintf("%.2f Mbps", megabits)
 }
